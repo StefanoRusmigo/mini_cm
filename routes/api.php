@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('clients', 'Api\ClientsController', [
+  'except' => ['edit', 'show', 'store']
+]);
+
+Route::resource('transactions', 'Api\TransactionsController', [
+  'except' => ['edit','update','show', 'store']
+]);

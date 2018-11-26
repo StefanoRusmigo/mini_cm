@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Transactions;
+use App\Clients;
 use Illuminate\Http\Request;
 
-class TransactionsController extends Controller
+class ClientsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +14,8 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $clients = Clients::paginate(15);
+        return response($clients);
     }
 
     /**
@@ -41,10 +32,10 @@ class TransactionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Transactions  $transactions
+     * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function show(Transactions $transactions)
+    public function show(Clients $clients)
     {
         //
     }
@@ -52,10 +43,10 @@ class TransactionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Transactions  $transactions
+     * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transactions $transactions)
+    public function edit(Clients $clients)
     {
         //
     }
@@ -64,10 +55,10 @@ class TransactionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transactions  $transactions
+     * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transactions $transactions)
+    public function update(Request $request, Clients $clients)
     {
         //
     }
@@ -75,10 +66,10 @@ class TransactionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Transactions  $transactions
+     * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transactions $transactions)
+    public function destroy(Clients $clients)
     {
         //
     }
