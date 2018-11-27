@@ -9,7 +9,7 @@
 
                     <div class="panel-body table-responsive">
 
-                        <router-view name="ClientsIndex"></router-view>
+                        <router-view name="clientsIndex"></router-view>
                         <router-view></router-view>
                     </div>
                 </div>

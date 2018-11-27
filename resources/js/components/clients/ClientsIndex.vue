@@ -18,12 +18,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="client, index in clients">
-                        <td><img src=""></td>
-                        <td>{{ client.name }}</td>
-                        <td>{{ client.address }}</td>
+                    <tr v-for="client, index in clients.data">
+                        <td><img :src="'/storage/avatars/'+client.avatar"></td>
+                        <td>{{ client.first_name }}</td>
+                        <td>{{ client.last_name }}</td>
                         <td>{{ client.email }}</td>
-                        <td>
                             <router-link :to="{name: 'editClient', params: {id: client.id}}" class="btn btn-xs btn-default">
                                 Edit
                             </router-link>

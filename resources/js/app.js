@@ -21,7 +21,7 @@ window.Vue.use(VueRouter);
  */
 
 import ClientsIndex from './components/clients/ClientsIndex.vue';
-// import ClientsCreate from './components/clients/ClientsCreate.vue';
+import ClientsCreate from './components/clients/ClientsCreate.vue';
 // import ClientsEdit from './components/clients/ClientsEdit.vue';
 
 // const files = require.context('./', true, /\.vue$/i)
@@ -34,7 +34,7 @@ const routes = [
         }
     },
     {path: '/admin/clients/create', component: ClientsCreate, name: 'createClient'},
-    {path: '/admin/clients/edit/:id', component: ClientsEdit, name: 'editClient'},
+    // {path: '/admin/clients/edit/:id', component: ClientsEdit, name: 'editClient'},
 ]
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -13893,6 +13893,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13916,7 +13918,7 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
  */
 
 
-// import ClientsCreate from './components/clients/ClientsCreate.vue';
+
 // import ClientsEdit from './components/clients/ClientsEdit.vue';
 
 // const files = require.context('./', true, /\.vue$/i)
@@ -13926,7 +13928,7 @@ var routes = [{
   components: {
     clientsIndex: __WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue___default.a
   }
-}, { path: '/admin/clients/create', component: ClientsCreate, name: 'createClient' }, { path: '/admin/clients/edit/:id', component: ClientsEdit, name: 'editClient' }];
+}, { path: '/admin/clients/create', component: __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue___default.a, name: 'createClient' }];
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50036,7 +50038,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50102,55 +50103,57 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.clients, function(client, index) {
-              return _c("tr", [
-                _vm._m(1, true),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(client.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(client.address))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(client.email))]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-xs btn-default",
-                        attrs: {
-                          to: { name: "editClient", params: { id: client.id } }
+            _vm._l(_vm.clients.data, function(client, index) {
+              return _c(
+                "tr",
+                [
+                  _c("td", [
+                    _c("img", {
+                      attrs: { src: "/storage/avatars/" + client.avatar }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.first_name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.last_name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.email))]),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-xs btn-default",
+                      attrs: {
+                        to: { name: "editClient", params: { id: client.id } }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Edit\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-xs btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteEntry(client.id, index)
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Edit\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-xs btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.deleteEntry(client.id, index)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Delete\n                        "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Delete\n                        "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             })
           )
         ])
@@ -50176,12 +50179,6 @@ var staticRenderFns = [
         _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("img", { attrs: { src: "" } })])
   }
 ]
 render._withStripped = true
@@ -50198,6 +50195,362 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(41)
+/* script */
+var __vue_script__ = __webpack_require__(50)
+/* template */
+var __vue_template__ = __webpack_require__(51)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/clients/ClientsCreate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-600b1cfc", Component.options)
+  } else {
+    hotAPI.reload("data-v-600b1cfc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            client: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                avatar: ''
+            },
+            errors: []
+        };
+    },
+    methods: {
+        saveForm: function saveForm() {
+            event.preventDefault();
+            var app = this;
+            axios.post('/api/clients', this.client).then(function (resp) {
+                app.$router.push({ path: '/' });
+            }).catch(function (resp) {
+                console.log(resp);
+                app.errors.push($resp);
+                alert("Could not create your company");
+            });
+        },
+        onFileChange: function onFileChange(e) {
+            var files = e.target.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+        },
+        createImage: function createImage(file) {
+            var reader = new FileReader();
+            var app = this;
+            //read the contents of the file as data: URL
+            var img = new Image();
+            //when read operation is finished assign data URL to client.avatar
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                //img dimentions validation
+                img.onload = function () {
+                    if (img.width < 100 || img.height < 100) {
+                        console.log(img);
+                        console.log(img.width);
+                        app.errors = [];
+                        app.errors.push('Avatar must be aleast 100x100');
+                        $("#avatar").val("");
+                        return;
+                    }
+                };
+
+                app.client.avatar = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c(
+          "router-link",
+          { staticClass: "btn btn-default", attrs: { to: "/" } },
+          [_vm._v("Back")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _vm._v("Create new client")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c(
+          "form",
+          {
+            staticStyle: { margin: "15px" },
+            on: {
+              submit: function($event) {
+                _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _vm.errors.length
+                ? _c("div", [
+                    _c("b", [_vm._v("Please correct the following error(s):")]),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function(error) {
+                        return _c("li", [_vm._v(_vm._s(error))])
+                      })
+                    )
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("First Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.client.first_name,
+                      expression: "client.first_name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", required: "true" },
+                  domProps: { value: _vm.client.first_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.client, "first_name", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Last Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.client.last_name,
+                      expression: "client.last_name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", required: "true" },
+                  domProps: { value: _vm.client.last_name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.client, "last_name", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Email")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.client.email,
+                      expression: "client.email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "email", required: "true" },
+                  domProps: { value: _vm.client.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.client, "email", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Avatar")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "file", id: "avatar", required: "true" },
+                  on: { change: _vm.onFileChange }
+                }),
+                _vm._v(" "),
+                _c("img", { attrs: { src: _vm.client.avatar } })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xs-12 form-group" }, [
+        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Create")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-600b1cfc", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
