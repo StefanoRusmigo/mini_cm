@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Clients;
+use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -17,8 +17,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Clients::paginate(15);
-        return response($clients);
+        return Client::paginate(10);
     }
 
     /**
@@ -38,7 +37,7 @@ class ClientsController extends Controller
         ]);
         $data = $request->all();
         //create new client instance 
-        $client = new Clients();
+        $client = new Client();
         //assign
         $client->first_name = $data['first_name'];
         $client->last_name = $data['last_name'];
@@ -63,7 +62,7 @@ class ClientsController extends Controller
      */
     public function show($id)
     {
-        return Clients::find($id);
+        return Client::find($id);
     }
 
     /**
@@ -75,7 +74,7 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = Clients::find($id);
+        $client = Client::find($id);
         //validation on the request
         $validatedData = $request->validate([
             'first_name'=>'required',
@@ -88,7 +87,7 @@ class ClientsController extends Controller
         $client->first_name = $data['first_name'];
         $client->last_name = $data['last_name'];
         $client->email = $data['email'];
-        if(strpos($data['avatar'], 'data:image')){
+        if(strpos($data['avatar'], 'data:image')===0){
             $client->avatar = $client->first_name.$client->last_name.time().'.png';
             //crop and save file
             $img = Image::make(file_get_contents($data['avatar']));
@@ -109,12 +108,12 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         //check if client exists
-        $client = Clients::find($id);
+        $client = Client::find($id);
         if(!$client){
             return response('Cannot find client with id:'.$id,422);
         }
         
-        Clients::destroy($id);
+        Client::destroy($id);
         return $client;
     }
 }

@@ -13897,6 +13897,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_clients_ClientsEdit_vue__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_clients_ClientsEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_clients_ClientsEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_transactions_TransactionsIndex_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_transactions_TransactionsIndex_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_transactions_TransactionsIndex_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13924,14 +13926,10 @@ Vue.component('pagination', __webpack_require__(57));
 
 
 
+
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
-var routes = [{
-  path: '/',
-  components: {
-    clientsIndex: __WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue___default.a
-  }
-}, { path: '/admin/clients/create', component: __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue___default.a, name: 'createClient' }, { path: '/admin/clients/edit/:id', component: __WEBPACK_IMPORTED_MODULE_3__components_clients_ClientsEdit_vue___default.a, name: 'editClient' }];
+var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_1__components_clients_ClientsIndex_vue___default.a, name: 'clientsIndex' }, { path: '/clients/create', component: __WEBPACK_IMPORTED_MODULE_2__components_clients_ClientsCreate_vue___default.a, name: 'createClient' }, { path: '/clients/edit/:id', component: __WEBPACK_IMPORTED_MODULE_3__components_clients_ClientsEdit_vue___default.a, name: 'editClient' }, { path: '/clients/:id/transactions/', component: __WEBPACK_IMPORTED_MODULE_4__components_transactions_TransactionsIndex_vue___default.a, name: 'transactionsIndex' }];
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50045,6 +50043,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50069,7 +50074,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             axios.get('/api/clients?page=' + page).then(function (resp) {
                 app.clients = resp.data;
-            }).catch(function (resp) {});
+            }).catch(function (resp) {
+                alert("Couldn't fetch clients");
+            });
         },
         deleteEntry: function deleteEntry(id, index) {
             if (confirm("Do you really want to delete it?")) {
@@ -50078,7 +50085,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     app.clients.data.splice(index, 1);
                 }).catch(function (error) {
                     console.log(error);
-                    if (error.response.status == 422) {
+                    if (error.response.status == 404) {
                         app.errors = [error.response.data];
                         alert("Client not found");
                     }
@@ -50131,60 +50138,89 @@ var render = function() {
             _c(
               "tbody",
               _vm._l(_vm.clients.data, function(client, index) {
-                return _c(
-                  "tr",
-                  [
-                    _c("td", [
-                      _c("img", {
-                        attrs: {
-                          src: "/storage/avatars/" + client.avatar,
-                          width: "100",
-                          height: "100"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(client.first_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(client.last_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(client.email))]),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-xs btn-default",
-                        attrs: {
-                          to: { name: "editClient", params: { id: client.id } }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Edit\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-xs btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.deleteEntry(client.id, index)
+                return _c("tr", [
+                  _c("td", [
+                    _c("img", {
+                      attrs: {
+                        src: "/storage/avatars/" + client.avatar,
+                        width: "100",
+                        height: "100"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.first_name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.last_name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(client.email))]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-xs btn-default",
+                          attrs: {
+                            to: {
+                              name: "transactionsIndex",
+                              params: { id: client.id }
+                            }
                           }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Delete\n                        "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
+                        },
+                        [
+                          _vm._v("\n                            View"),
+                          _c("br"),
+                          _vm._v(" Transactions\n                        ")
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-xs btn-default",
+                          attrs: {
+                            to: {
+                              name: "editClient",
+                              params: { id: client.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Edit\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-xs btn-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteEntry(client.id, index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Delete\n                        "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
               })
             )
           ]),
@@ -50213,6 +50249,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Last Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "100" } }, [_vm._v(" ")]),
         _vm._v(" "),
         _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
       ])
@@ -52151,7 +52189,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (error.response.status = 422) {
                     app.errors = error.response.data.errors;
                 } else {
-                    console.log(resp);
                     alert("Could not create the client");
                 }
             });
@@ -52362,6 +52399,233 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-07a52b10", module.exports)
+  }
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(41)
+/* script */
+var __vue_script__ = __webpack_require__(65)
+/* template */
+var __vue_template__ = __webpack_require__(66)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/transactions/TransactionsIndex.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-173a5dae", Component.options)
+  } else {
+    hotAPI.reload("data-v-173a5dae", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__validationErrors__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__validationErrors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__validationErrors__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            transactions: {},
+            client: {},
+            errors: ''
+        };
+    },
+    mounted: function mounted() {
+        this.getTransactions();
+        this.getClient();
+    },
+
+    components: {
+        'ValidationErrors': __WEBPACK_IMPORTED_MODULE_0__validationErrors___default.a
+    },
+    methods: {
+        getTransactions: function getTransactions(page) {
+            var app = this;
+            var id = app.$route.params.id;
+            if (typeof page === 'undifined') {
+                page = 1;
+            }
+            axios.get('/api/clients/' + id + '/transactions?page=' + page).then(function (resp) {
+                app.transactions = resp.data;
+            }).catch(function (error) {
+                if (error.response.status == 404) {
+                    app.errors = [error.response.data];
+                }
+            });
+        },
+        getClient: function getClient() {
+            var app = this;
+            var id = app.$route.params.id;
+
+            axios.get('/api/clients/' + id).then(function (resp) {
+                app.client = resp.data;
+                app.client.avatar = '/storage/avatars/' + resp.data.avatar;
+            }).catch(function () {
+                alert("Could not load client");
+            });
+        },
+        deleteEntry: function deleteEntry(id, index) {
+            if (confirm("Do you really want to delete it?")) {
+                var app = this;
+                axios.delete('/api/clients/' + id).then(function (resp) {
+                    app.transactions.data.splice(index, 1);
+                }).catch(function (error) {
+                    console.log(error);
+                    if (error.response.status == 404) {
+                        app.errors = [error.response.data];
+                        alert("Client not found");
+                    }
+                    alert("Could not delete client");
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c("img", {
+        attrs: { src: _vm.client.avatar, width: "100", height: "100" }
+      }),
+      _vm._v(" "),
+      _c("h3", [
+        _vm._v(
+          _vm._s(_vm.client.first_name) + "  " + _vm._s(_vm.client.last_name)
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [_vm._v("Transaction")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "panel-body" },
+        [
+          _vm.errors
+            ? _c("validation-errors", { attrs: { errors: _vm.errors } })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("table", { staticClass: "table table-bordered table-striped" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.transactions.data, function(transaction, index) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(transaction.amount))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(transaction.transaction_date))])
+                ])
+              })
+            )
+          ]),
+          _vm._v(" "),
+          _c("pagination", {
+            attrs: { data: _vm.transactions },
+            on: { "pagination-change-page": _vm.getTransactions }
+          })
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Amount")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Transaction Date")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-173a5dae", module.exports)
   }
 }
 

@@ -90,7 +90,6 @@
                         if(error.response.status=422){
                             app.errors = error.response.data.errors;
                         }else{
-                            console.log(resp);
                             alert("Could not create the client");
                         }
                     });

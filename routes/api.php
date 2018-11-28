@@ -17,10 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('clients', 'Api\ClientsController', [
-  'except' => ['edit', 'create']
-]);
+Route::apiResource('clients', 'Api\ClientsController');
 
-Route::resource('transactions', 'Api\TransactionsController', [
-  'except' => ['edit', 'create']
-]);
+Route::get('clients/{id}/transactions','Api\TransactionsController@index');

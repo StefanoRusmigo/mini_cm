@@ -16,6 +16,7 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th width="100">&nbsp;</th>
+                        <th width="100">&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -24,6 +25,12 @@
                         <td>{{ client.first_name }}</td>
                         <td>{{ client.last_name }}</td>
                         <td>{{ client.email }}</td>
+                        <td>
+                             <router-link :to="{name: 'transactionsIndex', params: {id: client.id}}" class="btn btn-xs btn-default">
+                                View</br> Transactions
+                            </router-link>
+                        </td>
+                        <td>
                             <router-link :to="{name: 'editClient', params: {id: client.id}}" class="btn btn-xs btn-default">
                                 Edit
                             </router-link>
@@ -68,7 +75,7 @@
                     app.clients = resp.data;
                 })
                 .catch(function (resp) {
-                    
+                    alert("Couldn't fetch clients");
                 });
             },
             deleteEntry(id, index) {
@@ -80,7 +87,7 @@
                         })
                         .catch(function (error) {
                             console.log(error);
-                            if(error.response.status==422){
+                            if(error.response.status==404){
                                 app.errors = [error.response.data];
                                 alert("Client not found");
                             }

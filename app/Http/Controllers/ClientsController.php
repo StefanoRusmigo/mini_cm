@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
 use View;
 
 

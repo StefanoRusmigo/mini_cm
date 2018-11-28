@@ -24,18 +24,15 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 import ClientsIndex from './components/clients/ClientsIndex.vue';
 import ClientsCreate from './components/clients/ClientsCreate.vue';
 import ClientsEdit from './components/clients/ClientsEdit.vue';
+import TransactionsIndex from './components/transactions/TransactionsIndex.vue';
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 const routes = [
-    {
-        path: '/',
-        components: {
-            clientsIndex: ClientsIndex
-        }
-    },
-    {path: '/admin/clients/create', component: ClientsCreate, name: 'createClient'},
-    {path: '/admin/clients/edit/:id', component: ClientsEdit, name: 'editClient'},
+    {path: '/',component:ClientsIndex , name: 'clientsIndex' },
+    {path: '/clients/create', component: ClientsCreate, name: 'createClient'},
+    {path: '/clients/edit/:id', component: ClientsEdit, name: 'editClient'},
+    {path: '/clients/:id/transactions/', component: TransactionsIndex, name: 'transactionsIndex'},
 ]
 /**
  * Next, we will create a fresh Vue application instance and attach it to

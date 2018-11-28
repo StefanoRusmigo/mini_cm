@@ -11,6 +11,10 @@ class ClientsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Clients::class,50)->create();
+        factory(App\Client::class,25)->create()->each(function($client){
+        	for($i=1;$i<10;$i++){
+        		$client->transactions()->save(factory(App\Transaction::class)->make());
+        	}
+        });
     }
 }
