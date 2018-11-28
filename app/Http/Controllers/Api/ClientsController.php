@@ -29,29 +29,26 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
+        //validation on the request
+        $validatedData = $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required|unique:clients',
+            'avatar'=>'required'
+        ]);
         $data = $request->all();
-        $a = Image::make(file_get_contents($data['avatar']))->save(public_path().'/storage/asddadafadasdwdasd.png');
-        dd($a);
-        // if($request->hasFile('avatar')) {
-
-        //     $image       = $request->file('avatar');
-        //     $filename    = $image->getClientOriginalName();
-
-        //     $image_resize = Image::make($image->getRealPath());              
-        //     $image_resize->resize(300, 300);
-        //     $image_resize->save(public_path('images/ServiceImages/' .$filename));
-        //     dd('asdasd');
-        // }
-        dd('asdasdasdasss');
-        $data['avatar']->move(public_path('storage/avatars'),'test');
-
-        $client = new Clients;
+        //create new client instance 
+        $client = new Clients();
+        //assign
         $client->first_name = $data['first_name'];
         $client->last_name = $data['last_name'];
         $client->email = $data['email'];
+        $client->avatar = $client->first_name.$client->last_name.time().'.png';
 
-        //TODO validation on client
-
+        //crop and save file
+        $img = Image::make(file_get_contents($data['avatar']));
+        $img->resize(100, 100);
+        $img->save(public_path().'/storage/avatars/'.$client->avatar);
 
         $client->save();
 
@@ -64,20 +61,9 @@ class ClientsController extends Controller
      * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function show(Clients $clients)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Clients  $clients
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Clients $clients)
-    {
-        //
+        return Clients::find($id);
     }
 
     /**
@@ -87,9 +73,31 @@ class ClientsController extends Controller
      * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Clients $clients)
+    public function update(Request $request, $id)
     {
-        //
+        $client = Clients::find($id);
+        //validation on the request
+        $validatedData = $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required|email|unique:clients,email,'.$id,
+            'avatar'=>'required'
+        ]);
+        $data = $request->all();
+        //assign
+        $client->first_name = $data['first_name'];
+        $client->last_name = $data['last_name'];
+        $client->email = $data['email'];
+        if(strpos($data['avatar'], 'data:image')){
+            $client->avatar = $client->first_name.$client->last_name.time().'.png';
+            //crop and save file
+            $img = Image::make(file_get_contents($data['avatar']));
+            $img->resize(100, 100);
+            $img->save(public_path().'/storage/avatars/'.$client->avatar);
+        }
+        $client->save();
+
+        return $client;
     }
 
     /**
@@ -98,8 +106,15 @@ class ClientsController extends Controller
      * @param  \App\Clients  $clients
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Clients $clients)
+    public function destroy($id)
     {
-        //
+        //check if client exists
+        $client = Clients::find($id);
+        if(!$client){
+            return response('Cannot find client with id:'.$id,422);
+        }
+        
+        Clients::destroy($id);
+        return $client;
     }
 }

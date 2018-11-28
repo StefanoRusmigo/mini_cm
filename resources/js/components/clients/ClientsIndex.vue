@@ -7,6 +7,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Client list</div>
             <div class="panel-body">
+                <validation-errors :errors="errors" v-if="errors"></validation-errors>
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -19,7 +20,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="client, index in clients.data">
-                        <td><img :src="'/storage/avatars/'+client.avatar"></td>
+                        <td><img :src="'/storage/avatars/'+client.avatar" width="100" height="100"></td>
                         <td>{{ client.first_name }}</td>
                         <td>{{ client.last_name }}</td>
                         <td>{{ client.email }}</td>
@@ -35,39 +36,56 @@
                     </tr>
                     </tbody>
                 </table>
+                <pagination :data="clients" @pagination-change-page="getClients"></pagination>
             </div>
         </div>
     </div>
 </template>
  
 <script>
+    import ValidationErrors from '../validationErrors';
     export default {
         data: function () {
             return {
-                clients: []
+                clients: {},
+                errors:''
             }
         },
         mounted() {
-            var app = this;
-            axios.get('/api/clients')
+            this.getClients();
+        },
+        components:{
+            'ValidationErrors':ValidationErrors
+        },
+        methods: {
+            getClients(page){
+                var app = this;
+                if(typeof page === 'undifined'){
+                    page = 1;
+                }
+                axios.get('/api/clients?page='+page)
                 .then(function (resp) {
                     app.clients = resp.data;
                 })
                 .catch(function (resp) {
-                    console.log(resp);
-                    alert("Could not load clients");
+                    
                 });
-        },
-        methods: {
+            },
             deleteEntry(id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     var app = this;
-                    axios.delete('/api/v1/clients/' + id)
+                    axios.delete('/api/clients/' + id)
                         .then(function (resp) {
-                            app.clients.splice(index, 1);
+                            app.clients.data.splice(index,1);
                         })
-                        .catch(function (resp) {
+                        .catch(function (error) {
+                            console.log(error);
+                            if(error.response.status==422){
+                                app.errors = [error.response.data];
+                                alert("Client not found");
+                            }
                             alert("Could not delete client");
+
                         });
                 }
             }
