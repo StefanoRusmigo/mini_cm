@@ -58,7 +58,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Clients  $clients
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -70,7 +70,7 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Clients  $clients
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,8 +82,7 @@ class ClientsController extends Controller
         }
         //validation on the request
         $validatedData = $request->validate([
-            'email'=>'email|unique:clients,email,'.$id,
-            'avatar'=>'regex:/^data:image/i'
+            'email'=>'email|unique:clients,email,'.$id
         ]);
         $data = $request->all();
         //assign if isset
@@ -105,7 +104,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Clients  $clients
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
