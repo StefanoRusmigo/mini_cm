@@ -32,7 +32,7 @@
                         <div class="col-xs-12 form-group">
                             <label class="control-label">Avatar</label>
                             <input type="file" id='avatar' @change="onFileChange" class="form-control" required="true" />
-                            <img v-if="client.avatar":src="client.avatar" id="img_avatar" width="100" height="100">
+                            <img v-if="client.avatar":src="client.avatar" width="100" height="100">
                         </div>
                     </div>
                     <div class="row">
@@ -98,6 +98,8 @@
                     img.onload = function(){
                         if(img.width<100 || img.height<100){
                             app.errors = ['Avatar must be aleast 100x100'];
+                             $("#avatar").val("");
+
                         }else{
                             app.client.avatar = e.target.result;
                         }
