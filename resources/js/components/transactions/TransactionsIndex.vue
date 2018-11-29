@@ -1,11 +1,14 @@
 <template>
     <div>
         <div class="form-group">
+            <router-link to="/" class="btn btn-default">Back</router-link>
+        </div>
+        <div class="form-group">
            <img :src="client.avatar" width="100" height="100">
            <h3>{{client.first_name}}  {{client.last_name}}</h3>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">Transaction</div>
+            <div class="panel-heading">Transactions</div>
             <div class="panel-body">
                 <validation-errors :errors="errors" v-if="errors"></validation-errors>
                 <table class="table table-bordered table-striped">

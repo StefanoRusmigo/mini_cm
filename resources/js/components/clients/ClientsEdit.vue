@@ -104,6 +104,7 @@
                 let reader = new FileReader();
                 let app = this;
                 //read the contents of the file as data: URL
+                reader.readAsDataURL(file);
                 let img = new Image;
                 //when read operation is finished assign data URL to client.avatar
                 reader.onload = (e) => {
@@ -112,14 +113,12 @@
                     img.onload = function(){
                         if(img.width<100 || img.height<100){
                             app.errors = ['Avatar must be aleast 100x100'];
-                            $("#avatar").val("");
-                            return;
+                        }else{
+                            app.client.avatar = e.target.result;
                         }
                     }
                     
-                    app.client.avatar = e.target.result;
                 };
-                reader.readAsDataURL(file);
 
             }
         }

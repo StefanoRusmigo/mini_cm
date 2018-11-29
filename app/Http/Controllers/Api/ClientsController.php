@@ -33,8 +33,9 @@ class ClientsController extends Controller
             'first_name'=>'required',
             'last_name'=>'required',
             'email'=>'required|unique:clients',
-            'avatar'=>'required'
+            'avatar'=>'required|regex:/^data:image/i'
         ]);
+
         $data = $request->all();
         //create new client instance 
         $client = new Client();
@@ -75,21 +76,23 @@ class ClientsController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::find($id);
+        //if client doesnt exist
+        if(!$client){
+            return response('Cannot find client with id:'.$id,404);
+        }
         //validation on the request
         $validatedData = $request->validate([
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required|email|unique:clients,email,'.$id,
-            'avatar'=>'required'
+            'email'=>'email|unique:clients,email,'.$id,
+            'avatar'=>'regex:/^data:image/i'
         ]);
         $data = $request->all();
-        //assign
-        $client->first_name = $data['first_name'];
-        $client->last_name = $data['last_name'];
-        $client->email = $data['email'];
-        if(strpos($data['avatar'], 'data:image')===0){
+        //assign if isset
+        if(isset($data['first_name'])) $client->first_name = @$data['first_name'];
+        if(isset($data['last_name']))$client->last_name = @$data['last_name'];
+        if(isset($data['email']))$client->email = @$data['email'];
+        //assign rezise and safe img only if data url is send
+        if(strpos(@$data['avatar'], 'data:image')===0){
             $client->avatar = $client->first_name.$client->last_name.time().'.png';
-            //crop and save file
             $img = Image::make(file_get_contents($data['avatar']));
             $img->resize(100, 100);
             $img->save(public_path().'/storage/avatars/'.$client->avatar);
@@ -110,9 +113,8 @@ class ClientsController extends Controller
         //check if client exists
         $client = Client::find($id);
         if(!$client){
-            return response('Cannot find client with id:'.$id,422);
+            return response('Cannot find client with id:'.$id,404);
         }
-        
         Client::destroy($id);
         return $client;
     }

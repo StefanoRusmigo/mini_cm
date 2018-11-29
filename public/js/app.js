@@ -50419,6 +50419,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var reader = new FileReader();
             var app = this;
             //read the contents of the file as data: URL
+            reader.readAsDataURL(file);
             var img = new Image();
             //when read operation is finished assign data URL to client.avatar
             reader.onload = function (e) {
@@ -50427,14 +50428,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 img.onload = function () {
                     if (img.width < 100 || img.height < 100) {
                         app.errors = ['Avatar must be aleast 100x100'];
-                        $("#avatar").val("");
-                        return;
+                    } else {
+                        app.client.avatar = e.target.result;
                     }
                 };
-
-                app.client.avatar = e.target.result;
             };
-            reader.readAsDataURL(file);
         }
     }
 });
@@ -50588,6 +50586,7 @@ var render = function() {
                   ? _c("img", {
                       attrs: {
                         src: _vm.client.avatar,
+                        id: "img_avatar",
                         width: "100",
                         height: "100"
                       }
@@ -52202,6 +52201,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var reader = new FileReader();
             var app = this;
             //read the contents of the file as data: URL
+            reader.readAsDataURL(file);
             var img = new Image();
             //when read operation is finished assign data URL to client.avatar
             reader.onload = function (e) {
@@ -52210,14 +52210,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 img.onload = function () {
                     if (img.width < 100 || img.height < 100) {
                         app.errors = ['Avatar must be aleast 100x100'];
-                        $("#avatar").val("");
-                        return;
+                    } else {
+                        app.client.avatar = e.target.result;
                     }
                 };
-
-                app.client.avatar = e.target.result;
             };
-            reader.readAsDataURL(file);
         }
     }
 });
@@ -52487,6 +52484,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -52558,6 +52558,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c(
+          "router-link",
+          { staticClass: "btn btn-default", attrs: { to: "/" } },
+          [_vm._v("Back")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("img", {
         attrs: { src: _vm.client.avatar, width: "100", height: "100" }
@@ -52571,7 +52584,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-heading" }, [_vm._v("Transaction")]),
+      _c("div", { staticClass: "panel-heading" }, [_vm._v("Transactions")]),
       _vm._v(" "),
       _c(
         "div",
