@@ -11,8 +11,7 @@ Test project for manage clients and their transactions
 * composer install
 * php artisan migrate --seed
 * npm install
-
-* Any modifications needed to be made to files/folders
+* npm run dev
 
 ### Executing program
 
